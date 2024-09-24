@@ -1,0 +1,18 @@
+class Mahasiswa:
+    # Konstruktor kelas untuk inisialisasi objek
+    def __init__(self, nama, nim, jurusan):
+        self.nama = nama
+        self.nim = nim
+        self.jurusan = jurusan
+
+    # Metode untuk menampilkan aktivitas belajar
+    def belajar(self):
+        print(f"{self.nama} sedang belajar.")
+
+# Implementasi penggunaan kelas Mahasiswa
+mahasiswa1 = Mahasiswa("Pirdaus", "2025", "Informatika")
+mahasiswa2 = Mahasiswa("Brusko", "2026", "Sistem Informasi")
+
+# Menggunakan metode objek
+mahasiswa1.belajar() 
+mahasiswa2.belajar()  
