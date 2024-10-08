@@ -4,24 +4,39 @@ class Orang {
     }
 }
 
-// Definisi kelas turunan
+// Definisi kelas turunan Mahasiswa
 class Mahasiswa extends Orang {
     tampilkanPeran() {
         console.log("Peran  : Mahasiswa");
     }
 }
 
-class Dosen extends Orang {
+// Definisi kelas turunan Guru
+class Guru extends Orang {
     tampilkanPeran() {
-        console.log("Peran  : Dosen");
+        console.log("Peran  : Guru");
+    }
+}
+
+// Definisi kelas turunan baru Pengusaha
+class Pengusaha extends Orang {
+    tampilkanPeran() {
+        console.log("Peran  : Pengusaha");
+    }
+    
+    pitchBisnis() {
+        console.log("Saya punya ide bisnis yang akan mengubah dunia!");
     }
 }
 
 // Menggunakan polimorfisme
 const orang1 = new Orang();
 const mahasiswa1 = new Mahasiswa();
-const dosen1 = new Dosen();
+const guru1 = new Guru();
+const pengusaha1 = new Pengusaha();
 
-orang1.tampilkanPeran();    // Output: Peran: Orang biasa
+orang1.tampilkanPeran();     // Output: Peran: Darah bangsawan
 mahasiswa1.tampilkanPeran(); // Output: Peran: Mahasiswa
-dosen1.tampilkanPeran();     // Output: Peran: Dosen
+guru1.tampilkanPeran();      // Output: Peran: Guru
+pengusaha1.tampilkanPeran(); // Output: Peran: Pengusaha
+pengusaha1.pitchBisnis();    // Output: Saya punya ide bisnis yang akan mengubah dunia!
