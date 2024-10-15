@@ -38,7 +38,7 @@ implementasiAntarmuka(Pantai, TempatWisataInterface);
 
 // Penggunaan
 const museum = new Museum();
-museum.kunjungi(); 
+museum.kunjungi(); // Output: Mengunjungi museum untuk melihat koleksi artefak bersejarah.
 
 const pantai = new Pantai();
-pantai.kunjungi(); 
+pantai.kunjungi(); // Output: Mengunjungi pantai untuk menikmati suasana laut dan berjemur.
