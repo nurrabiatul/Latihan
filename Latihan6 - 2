@@ -1,0 +1,44 @@
+// Definisi antarmuka melalui pola objek
+const TempatWisataInterface = {
+    kunjungi: function() {
+        throw new Error("Metode 'kunjungi()' harus diimplementasikan.");
+    }
+};
+
+// Fungsi untuk memeriksa implementasi antarmuka
+function implementasiAntarmuka(kelas, antarmuka) {
+    for (const namaMetode in antarmuka) {
+        if (!kelas.prototype[namaMetode] || typeof kelas.prototype[namaMetode] !== 'function') {
+            throw new Error(`Kelas ${kelas.name} harus mengimplementasikan metode '${namaMetode}' dari antarmuka ${antarmuka.constructor.name}.`);
+        }
+    }
+}
+
+// Kelas yang mengimplementasikan antarmuka
+class Museum {
+    constructor() {}
+
+    kunjungi() {
+        console.log("Mengunjungi museum untuk melihat koleksi artefak bersejarah.");
+    }
+}
+
+// Kelas yang mengimplementasikan antarmuka
+class Pantai {
+    constructor() {}
+
+    kunjungi() {
+        console.log("Mengunjungi pantai untuk menikmati suasana laut dan berjemur.");
+    }
+}
+
+// Pemeriksaan implementasi antarmuka
+implementasiAntarmuka(Museum, TempatWisataInterface);
+implementasiAntarmuka(Pantai, TempatWisataInterface);
+
+// Penggunaan
+const museum = new Museum();
+museum.kunjungi(); 
+
+const pantai = new Pantai();
+pantai.kunjungi(); 
