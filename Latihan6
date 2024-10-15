@@ -1,0 +1,42 @@
+// Kelas abstrak tidak dapat diinstansiasi secara langsung
+class Produk {
+    constructor(jenis) {
+        if (this.constructor === Produk) {
+            throw new Error("Kelas Produk adalah kelas abstrak dan tidak dapat diinstansiasi.");
+        }
+        this.jenis = jenis;
+    }
+
+    // Metode abstrak
+    gunakan() {
+        throw new Error("Metode 'gunakan()' harus diimplementasikan.");
+    }
+}
+
+// Kelas turunan yang mengimplementasikan metode abstrak
+class FaceCream extends Produk {
+    constructor() {
+        super('Face Cream');
+    }
+
+    gunakan() {
+        console.log(`Oleskan ${this.jenis} pada wajah Anda.`);
+    }
+}
+
+class Toner extends Produk {
+    constructor() {
+        super('Toner');
+    }
+
+    gunakan() {
+        console.log(`Basahi kapas dengan ${this.jenis} dan aplikasikan pada wajah Anda.`);
+    }
+}
+
+// Penggunaan
+const faceCream = new FaceCream();
+faceCream.gunakan(); // Output: Oleskan Face Cream pada wajah Anda.
+
+const toner = new Toner();
+toner.gunakan(); // Output: Basahi kapas dengan Toner dan aplikasikan pada wajah Anda.
