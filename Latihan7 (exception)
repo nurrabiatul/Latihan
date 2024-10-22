@@ -66,5 +66,5 @@ function bagi(a, b) {
 }
 
 // Penggunaan fungsi bagi
-console.log(bagi(10, 2)); // Output: 5
-console.log(bagi(10, 5)); // Output: Terjadi error: Pembagian dengan nol tidak diperbolehkan.
+console.log(bagi(20, 2)); // Output: 5
+console.log(bagi(100, 5)); // Output: Terjadi error: Pembagian dengan nol tidak diperbolehkan.
