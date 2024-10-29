@@ -1,0 +1,153 @@
+// Mengelola data nilai siswa
+class KoleksiNilai {
+    constructor() {
+        this.nilai = new Map(); // Menggunakan Map sebagai koleksi
+    }
+
+    // CRUD pada Map
+    tambahNilai(nama, nilai) {
+        if (!this.nilai.has(nama)) {
+            this.nilai.set(nama, []);
+        }
+        this.nilai.get(nama).push(nilai);
+    }
+
+    updateNilai(nama, nilaiBaru) {
+        if (this.nilai.has(nama)) {
+            this.nilai.set(nama, nilaiBaru);
+        } else {
+            throw new Error(`Nama ${nama} tidak ditemukan dalam koleksi.`);
+        }
+    }
+
+    hapusNilai(nama) {
+        if (this.nilai.has(nama)) {
+            this.nilai.delete(nama);
+        } else {
+            throw new Error(`Nama ${nama} tidak ditemukan dalam koleksi.`);
+        }
+    }
+
+    getNilai(nama) {
+        return this.nilai.get(nama) || [];
+    }
+
+    getRataRata(nama) {
+        const nilaiMahasiswa = this.getNilai(nama);
+        if (nilaiMahasiswa.length === 0) {
+            throw new Error("Data nilai tidak ditemukan atau kosong.");
+        }
+        const total = nilaiMahasiswa.reduce((acc, curr) => acc + curr, 0);
+        return total / nilaiMahasiswa.length;
+    }
+}
+
+// Mengelola tampilan atau representasi data
+class KoleksiView {
+    render(nama, rataRata) {
+        return `
+            <div class="nilai-card">
+                <p>Nama: ${nama}</p>
+                <p>Rata-rata nilai: ${rataRata}</p>
+            </div>
+        `;
+    }
+
+    renderError(error) {
+        return `
+            <div class="nilai-card error">
+                <p>Error: ${error}</p>
+            </div>
+        `;
+    }
+}
+
+// Menghubungkan KoleksiNilai dan KoleksiView
+class KoleksiController {
+    constructor(model, view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    tampilkanRataRata(nama, nilai) {
+        try {
+            this.model.tambahNilai(nama, nilai);
+            const rataRata = this.model.getRataRata(nama);
+            document.getElementById("output").innerHTML = this.view.render(nama, rataRata);
+        } catch (error) {
+            document.getElementById("output").innerHTML = this.view.renderError(error.message);
+        }
+    }
+
+    hapusData(nama) {
+        try {
+            this.model.hapusNilai(nama);
+            document.getElementById("output").innerHTML = `<p>Data nilai untuk ${nama} berhasil dihapus.</p>`;
+        } catch (error) {
+            document.getElementById("output").innerHTML = this.view.renderError(error.message);
+        }
+    }
+}
+
+// Inisialisasi dan Penggunaan
+const koleksiController = new KoleksiController(new KoleksiNilai(), new KoleksiView());
+koleksiController.tampilkanRataRata("Angga", [80, 90, 100]); // Menampilkan rata-rata
+koleksiController.tampilkanRataRata("Soleha", [75, 85, 95]);  // Menampilkan rata-rata
+koleksiController.tampilkanRataRata("Agata", [75, 85, 95]);// Menampilkan rata-rata
+
+// Fungsi generik menggunakan pola
+function getElementAtIndex(array, index) {
+    if (index >= 0 && index < array.length) {
+        return array[index];
+    }
+    throw new Error("Indeks di luar jangkauan");
+}
+
+let angka = [50, 100, 150];
+let kata = ["Limpul", "cepe", "pego"];
+
+console.log(getElementAtIndex(angka, 2)); // Output
+console.log(getElementAtIndex(kata, 2)); // Output
+
+// Menggunakan List (Array)
+let listMahasiswa = ["Angga", "Soleha", "Agata"];
+listMahasiswa.push("Rangga"); // Menambahkan elemen baru
+console.log(listMahasiswa); // Output
+
+function hapusMahasiswa(nama) {
+    const index = listMahasiswa.indexOf(nama);
+    if (index > -1) {
+        listMahasiswa.splice(index, 1);
+    }
+}
+hapusMahasiswa("Angga");
+console.log(listMahasiswa); // Output: 
+
+// Menggunakan Set
+let setMahasiswa = new Set(["Nur", "Rabiatul", "Adawiyah"]);
+setMahasiswa.add("Aprilia");
+setMahasiswa.add("Angga"); // Tidak akan menambahkan karena Budi sudah ada
+console.log(setMahasiswa); // Output: Set(4)
+
+function hapusDariSet(nama) {
+    if (setMahasiswa.has(nama)) {
+        setMahasiswa.delete(nama);
+    }
+}
+hapusDariSet("Angga");
+console.log(setMahasiswa); // Output: Set(3) 
+
+// Menggunakan Map
+let mapNilai = new Map();
+mapNilai.set("Angga", 90);
+mapNilai.set("Soleha", 85);
+mapNilai.set("Agata", 85);
+console.log(mapNilai.get("Angga")); // Output
+
+function hapusDariMap(nama) {
+    if (mapNilai.has(nama)) {
+        mapNilai.delete(nama);
+    }
+}
+hapusDariMap("Soleha");
+console.log(mapNilai); // Output: Map(1)
