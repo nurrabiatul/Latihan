@@ -1,12 +1,12 @@
-<div id='content'> halo </div>
+<div id='content'>halo</div>
 
 <script>
 pbo = {
   model: {
     mahasiswa: [
-      { username: 'wibi', pin: 'wibi321' },
-      { username: 'kiting', pin: 'kiting321' },
-      { username: 'cindhy', pin: 'cindhy321' },
+      { username: 'wibi', password: 'wibi321' },
+      { username: 'kiting', password: 'kiting321' },
+      { username: 'cindhy', password: 'cindhy321' },
     ],
   },
   services: {
@@ -21,21 +21,37 @@ pbo = {
     signform: function () {
       return `
         Username: <input type='text' value='' id='username'><br/>
-        Pin: <input type='password' value='' id='pin'><br/>
+        Password: <input type='password' value='' id='password'><br/>
         <button id='login'>Login</button><br/>
         <button id='cancel'>Cancel</button><br/>
+        <div id='message' style='color:red; margin-top:10px;'></div>
       `;
     },
   },
   controller: {
     signin: function () {
       document.getElementById('login').onclick = function () {
-        alert('Login button clicked');
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const messageElement = document.getElementById('message');
+
+        // Check if the username and password match any entry in the model
+        const user = pbo.model.mahasiswa.find(
+          (m) => m.username === username && m.password === password
+        );
+
+        if (user) {
+          messageElement.textContent = 'Login success!';
+          messageElement.style.color = 'green';
+        } else {
+          messageElement.textContent = 'Username dan password tidak valid!';
+          messageElement.style.color = 'red';
+        }
       };
     },
     signout: function () {
       document.getElementById('username').value = '';
-      document.getElementById('pin').value = '';
+      document.getElementById('password').value = '';
     },
     signform: function () {
       document.getElementById('content').innerHTML = pbo.view.signform();
@@ -45,7 +61,8 @@ pbo = {
     cancel: function () {
       document.getElementById('cancel').onclick = function () {
         document.getElementById('username').value = '';
-        document.getElementById('pin').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('message').textContent = '';
       };
     },
   },
@@ -132,9 +149,9 @@ pbo.controller.signform();
             <form>
               <h2>Login</h2>
               <label for="username">Username:</label>
-              <input type="text" id="username" placeholder="Enter your username" />
-              <label for="pin">Pin:</label>
-              <input type="password" id="pin" placeholder="Enter your pin" />
+              <input type="text" id="username" placeholder="Masukkan username" />
+              <label for="pin">Password:</label>
+              <input type="password" id="pin" placeholder="Masukkan password" />
               <button type="button" id="login">Login</button>
               <button type="button" id="cancel">Cancel</button>
             </form>
@@ -149,7 +166,7 @@ pbo.controller.signform();
           };
           document.getElementById('cancel').onclick = function () {
             document.getElementById('username').value = '';
-            document.getElementById('pin').value = '';
+            document.getElementById('password').value = '';
           };
         },
       },
@@ -160,4 +177,3 @@ pbo.controller.signform();
   </script>
 </body>
 </html>
-
