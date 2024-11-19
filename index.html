@@ -1,76 +1,3 @@
-<div id='content'>halo</div>
-
-<script>
-pbo = {
-  model: {
-    mahasiswa: [
-      { username: 'wibi', password: 'wibi321' },
-      { username: 'kiting', password: 'kiting321' },
-      { username: 'cindhy', password: 'cindhy321' },
-    ],
-  },
-  services: {
-    getter: function () {
-      alert('getter');
-    },
-    setter: function () {
-      alert('setter');
-    },
-  },
-  view: {
-    signform: function () {
-      return `
-        Username: <input type='text' value='' id='username'><br/>
-        Password: <input type='password' value='' id='password'><br/>
-        <button id='login'>Login</button><br/>
-        <button id='cancel'>Cancel</button><br/>
-        <div id='message' style='color:red; margin-top:10px;'></div>
-      `;
-    },
-  },
-  controller: {
-    signin: function () {
-      document.getElementById('login').onclick = function () {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const messageElement = document.getElementById('message');
-
-        // Check if the username and password match any entry in the model
-        const user = pbo.model.mahasiswa.find(
-          (m) => m.username === username && m.password === password
-        );
-
-        if (user) {
-          messageElement.textContent = 'Login success!';
-          messageElement.style.color = 'green';
-        } else {
-          messageElement.textContent = 'Username dan password tidak valid!';
-          messageElement.style.color = 'red';
-        }
-      };
-    },
-    signout: function () {
-      document.getElementById('username').value = '';
-      document.getElementById('password').value = '';
-    },
-    signform: function () {
-      document.getElementById('content').innerHTML = pbo.view.signform();
-      pbo.controller.signin(); // Add functionality to Login button
-      pbo.controller.cancel(); // Add functionality to Cancel button
-    },
-    cancel: function () {
-      document.getElementById('cancel').onclick = function () {
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('message').textContent = '';
-      };
-    },
-  },
-};
-
-pbo.controller.signform();
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,6 +5,7 @@ pbo.controller.signform();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Form</title>
   <style>
+    /* Tambahkan gaya untuk formulir login */
     #content {
       display: flex;
       justify-content: center;
@@ -134,13 +62,26 @@ pbo.controller.signform();
     form button#cancel:hover {
       background-color: #c23327;
     }
+
+    #message {
+      margin-top: 10px;
+      color: red;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div id="content"></div>
 
   <script>
-    pbo = {
+    const pbo = {
+      model: {
+        mahasiswa: [
+          { username: 'wibi', password: 'wibi321' },
+          { username: 'kiting', password: 'kiting321' },
+          { username: 'cindhy', password: 'cindhy321' },
+        ],
+      },
       view: {
         signform: function () {
           return `
@@ -148,23 +89,45 @@ pbo.controller.signform();
               <h2>Login</h2>
               <label for="username">Username:</label>
               <input type="text" id="username" placeholder="Masukkan username" />
-              <label for="pin">Password:</label>
-              <input type="password" id="pin" placeholder="Masukkan password" />
+              <label for="password">Password:</label>
+              <input type="password" id="password" placeholder="Masukkan password" />
               <button type="button" id="login">Login</button>
               <button type="button" id="cancel">Cancel</button>
+              <div id="message"></div>
             </form>
           `;
         },
       },
       controller: {
         signform: function () {
+          // Render form di content
           document.getElementById('content').innerHTML = pbo.view.signform();
+
+          // Event handler tombol login
           document.getElementById('login').onclick = function () {
-            alert('Login button clicked');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            // Cek apakah username dan password cocok
+            const user = pbo.model.mahasiswa.find(
+              (m) => m.username === username && m.password === password
+            );
+
+            if (user) {
+              messageElement.textContent = 'Login success!';
+              messageElement.style.color = 'green';
+            } else {
+              messageElement.textContent = 'Username dan password tidak valid!';
+              messageElement.style.color = 'red';
+            }
           };
+
+          // Event handler tombol cancel
           document.getElementById('cancel').onclick = function () {
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+            document.getElementById('message').textContent = '';
           };
         },
       },
